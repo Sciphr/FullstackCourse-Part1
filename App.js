@@ -20,7 +20,6 @@ const Content = (props) => {
       </p>
     </>
   )
-  
 }
 
 // Number of exercises all passed as 3 separate props from App, and calculated as a total and printed out 
@@ -31,6 +30,14 @@ const Total = (props) => {
       <p>
         Number of exercises {allExercises}
       </p>
+    </>
+  )
+}
+
+const Part = (props) => {
+  return (
+    <>
+      <Content part={props.part} exercises={props.exercises}/>
     </>
   )
 }
@@ -48,9 +55,9 @@ const App = () => {
   return (
     <div>
       <Header course={course}/>
-        <Content part={part1} exercises={exercises1}/>
-        <Content part={part2} exercises={exercises2}/>
-        <Content part={part3} exercises={exercises3}/>
+        <Part part={part1} exercises={exercises1}/>
+        <Part part={part2} exercises={exercises2}/>
+        <Part part={part3} exercises={exercises3}/>
         <Total exercises1={exercises1} exercises2={exercises2} exercises3={exercises3}/>
     </div>
   )
