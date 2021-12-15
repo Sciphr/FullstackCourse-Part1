@@ -13,58 +13,85 @@ const Header = (props) => {
 
 // Content passed 3 times by App with different data sent each time it is called using props.part1(2)(3) and props.exercises1(2)(3)
 const Content = (props) => {
+  //For readability, make array to avoid using props. all the time
+  const partsArray = props.parts
+
+  let nameArray = []
+  let exercisesArray = []
+  let counter = 0
+  let finalArray = []
+
+  partsArray.forEach (value =>{
+    nameArray[counter] = value.name
+    counter++
+  })
+
+  counter = 0
+
+  partsArray.forEach (value =>{
+    exercisesArray[counter] = value.exercises
+    counter++
+  })
+
+  let length = nameArray.length
+
+  for (var i = 0; i < length; i++) {
+    finalArray.push (<p> {nameArray[i]} {exercisesArray[i]} </p>)
+  }
+
   return (
-    <>
-      <p>
-        {props.part} {props.exercises}
-      </p>
-    </>
+        <>
+          {finalArray}
+        </>
   )
 }
 
 // Number of exercises all passed as 3 separate props from App, and calculated as a total and printed out 
 const Total = (props) => {
-  const allExercises = props.exercises1+props.exercises2+props.exercises3
+
+  //console.log(props.parts[0].name)
+
+  const partsArray = props.parts
+  let total = 0;
+
+  partsArray.forEach (value=> {
+    total = total + value.exercises
+  })
+
   return (
     <>
       <p>
-        Number of exercises {allExercises}
+        Number of exercises {total}
       </p>
     </>
   )
 }
 
-const Part = (props) => {
-  return (
-    <>
-      <Content part={props.part} exercises={props.exercises}/>
-    </>
-  )
-}
 
 // Main App sending all information to corresponding components
 const App = () => {
   const course = 'Half Stack application development'
-  const part1 = {
-    name: 'Fundamentals of React',
-    exercises: 10
-  }
-  const part2 = {
-    name: 'Using props to pass data',
-    exercises: 7
-  }
-  const part3 = {
-    name: 'State of a component',
-    exercises: 14
-  }
+  const parts = [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      name: 'State of a component',
+      exercises: 14
+    }
+  ]
 
+  //Removed Part app as example on fullstackopen when requesting to not pass objects as separate props, shows no Parts app
   return (
     <div>
       <Header course={course}/>
-        <Part part={part1.name} exercises={part1.exercises}/>
-        <Part part={part2.name} exercises={part2.exercises}/>
-        <Part part={part3.name} exercises={part2.exercises}/>
-        <Total exercises1={part1.exercises} exercises2={part2.exercises} exercises3={part3.exercises}/>
+      <Content parts={parts} />
+      <Total parts={parts} />
     </div>
   )
 }
